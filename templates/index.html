@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactless Quiz System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
+</head>
+<body>
+    <div id="cursor" class="virtual-cursor"></div>
+    
+    <div class="split-layout">
+        <!-- Left Panel: Camera & Warnings -->
+        <div class="left-panel">
+            <div class="camera-container">
+                <img src="/video_feed" alt="Camera Feed" class="camera-feed">
+                <!-- Overlay for warnings -->
+                <div id="warning-box" class="warning-box hidden">
+                    <ul id="warning-list"></ul>
+                </div>
+            </div>
+            <div class="instructions">
+                <h3>How to play:</h3>
+                <p>👆 <strong>Move:</strong> Use your index finger to guide the cursor.</p>
+                <p>🤏 <strong>Click:</strong> Pinch index & thumb to select an option.</p>
+                <p>⚠️ <strong>Rules:</strong> Keep your face in frame. No extra hands allowed!</p>
+            </div>
+        </div>
+        
+        <!-- Right Panel: Dynamic Screens -->
+        <div class="right-panel">
+            <!-- Home Screen -->
+            <div id="home-screen" class="screen">
+                <div class="welcome-container">
+                    <h1 class="main-title">Contactless Quiz</h1>
+                    <p class="subtitle">Gesture-controlled interactive platform</p>
+                    <div class="menu-grid">
+                        <button id="btn-start-quiz" class="menu-btn interactive-element">
+                            <span class="btn-icon">🎮</span>
+                            <span class="btn-text">Start Quiz Competition</span>
+                        </button>
+                        <button id="btn-manage-questions" class="menu-btn interactive-element secondary">
+                            <span class="btn-icon">📝</span>
+                            <span class="btn-text">Add Questions</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Management Screen -->
+            <div id="management-screen" class="screen hidden">
+                <div class="form-container glass-panel">
+                    <div class="form-header">
+                        <button id="btn-back-home" class="back-btn interactive-element">← Back</button>
+                        <h2>Question Management</h2>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Question Text</label>
+                        <input type="text" id="input-q-text" placeholder="Enter your question here..." class="form-input">
+                    </div>
+                    
+                    <div class="options-input-grid">
+                        <div class="input-group">
+                            <label>Option A</label>
+                            <input type="text" id="input-opt-0" placeholder="Option A" class="form-input">
+                        </div>
+                        <div class="input-group">
+                            <label>Option B</label>
+                            <input type="text" id="input-opt-1" placeholder="Option B" class="form-input">
+                        </div>
+                        <div class="input-group">
+                            <label>Option C</label>
+                            <input type="text" id="input-opt-2" placeholder="Option C" class="form-input">
+                        </div>
+                        <div class="input-group">
+                            <label>Option D</label>
+                            <input type="text" id="input-opt-3" placeholder="Option D" class="form-input">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Correct Answer</label>
+                        <select id="input-correct" class="form-input">
+                            <option value="0">Option A</option>
+                            <option value="1">Option B</option>
+                            <option value="2">Option C</option>
+                            <option value="3">Option D</option>
+                        </select>
+                    </div>
+                    
+                    <button id="btn-save-question" class="submit-btn interactive-element">Add to Quiz</button>
+                </div>
+
+                <div class="questions-list-container glass-panel">
+                    <h3>Added Questions</h3>
+                    <div id="questions-list" class="questions-list">
+                        <!-- Questions will appear here -->
+                    </div>
+                    <div class="list-footer">
+                        <button id="btn-clear-all" class="clear-btn interactive-element">🗑️ Clear All Questions</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div id="quiz-screen" class="screen hidden">
+                <header class="quiz-header">
+                    <div class="score-board">Score: <span id="score-display">0</span></div>
+                    <div class="timer">Time Left: <span id="time-display">30</span>s</div>
+                </header>
+                
+                <main class="quiz-container">
+                    <div id="quiz-content">
+                        <h2 id="question-text" class="question">Loading question...</h2>
+                        <div class="options-grid" id="options-grid">
+                            <!-- Options generated dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div id="result-content" class="hidden">
+                        <h2 class="finish-text">Quiz Completed!</h2>
+                        <p class="final-score">Your Score: <span id="final-score-display">0</span></p>
+                        <div class="result-actions">
+                            <button class="restart-btn interactive-element" id="restart-btn">Restart</button>
+                            <button class="restart-btn secondary interactive-element" id="btn-exit-quiz">Exit</button>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    
+    <div id="feedback-toast" class="toast hidden"></div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

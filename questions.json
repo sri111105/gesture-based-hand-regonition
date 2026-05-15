@@ -1,0 +1,46 @@
+[
+    {
+        "id": "1777007449631eluhtd5bq",
+        "q": "current tech programming?",
+        "options": [
+            "java",
+            "c",
+            "c++",
+            "python"
+        ],
+        "answer": 0
+    },
+    {
+        "id": "1777010908076yomyh782g",
+        "q": "a for apple",
+        "options": [
+            "yes",
+            "no",
+            "mabe",
+            "nill"
+        ],
+        "answer": 0
+    },
+    {
+        "id": "1777010972155ggok0jvps",
+        "q": "vsb is good college?",
+        "options": [
+            "yes",
+            "maybe",
+            "somewhat",
+            "nil"
+        ],
+        "answer": 0
+    },
+    {
+        "id": "17770116372639tu7p3616",
+        "q": "initial of vigneh is?",
+        "options": [
+            "n",
+            "k",
+            "s",
+            "d"
+        ],
+        "answer": 1
+    }
+]
